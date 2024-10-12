@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: LandingPage(),
     );
   }
 }
@@ -120,6 +121,305 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+class PortfolioPage extends StatefulWidget {
+  const PortfolioPage({super.key, required this.title});
+
+  final String title;
+
+  @override
+  State<PortfolioPage> createState() => _PortfolioPageState();
+}
+
+class _PortfolioPageState extends State<PortfolioPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('My Portfolio'),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Hero image or banner
+            Image.asset('images/hero_image.jpg'),
+
+            // About me section
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                'Hi there! I\'m a Flutter developer passionate about creating beautiful and functional mobile apps.',
+                style: TextStyle(fontSize: 18),
+              ),
+            ),
+
+            // Skills section
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                'My Skills:',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.code),
+              title: Text('Flutter'),
+            ),
+            ListTile(
+              leading: Icon(Icons.code),
+              title: Text('Dart'),
+            ),
+            // Add more skills as needed
+
+            // Projects section
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                'Featured Projects:',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
+            // List of projects with images and descriptions
+
+            // Contact section
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                'Contact Me:',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
+            // Email, phone number, social media links
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class LandingPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // Hero section
+            Container(
+              height: 500,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.blue,
+                image: DecorationImage(
+                  image: AssetImage('images/hero_image.jpg'),
+                  fit: BoxFit.cover,
+                  opacity: 0.7, // Adjust opacity as needed
+                ),
+              ),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Your Headline',
+                      style: GoogleFonts.poppins(
+                        fontSize: 48,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                      'Your Subheadline',
+                      style: GoogleFonts.poppins(
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        // Handle CTA action
+                      },
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.blue,
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      child: Text('Get Started'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            // About section
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'About Us',
+                    style: GoogleFonts.poppins(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    'We are a team of passionate developers specializing in Flutter app development.',
+                    style: GoogleFonts.poppins(fontSize: 16),
+                  ),
+                ],
+              ),
+            ),
+
+            // Services section
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Our Services',
+                    style: GoogleFonts.poppins(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ServiceCard(
+                        icon: Icons.mobile_friendly,
+                        title: 'Mobile App Development',
+                        description:
+                            'We create beautiful and functional mobile apps for iOS and Android.',
+                      ),
+                      ServiceCard(
+                        icon: Icons.design_services,
+                        title: 'UI/UX Design',
+                        description:
+                            'We design intuitive and visually appealing user interfaces.',
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+
+            // Contact section
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Contact Us',
+                    style: GoogleFonts.poppins(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ContactItem(
+                        icon: Icons.email,
+                        text: 'info@yourdomain.com',
+                      ),
+                      ContactItem(
+                        icon: Icons.phone,
+                        text: '+1234567890',
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ServiceCard extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String description;
+
+  const ServiceCard({
+    required this.icon,
+    required this.title,
+    required this.description,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 2,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(
+              icon,
+              size: 48,
+              color: Colors.blue,
+            ),
+            SizedBox(height: 8),
+            Text(
+              title,
+              style: GoogleFonts.poppins(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 8),
+            Text(
+              description,
+              style: GoogleFonts.poppins(fontSize: 14),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ContactItem extends StatelessWidget {
+  final IconData icon;
+  final String text;
+
+  const ContactItem({
+    required this.icon,
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(
+          icon,
+          size: 24,
+          color: Colors.blue,
+        ),
+        SizedBox(width: 8),
+        Text(
+          text,
+          style: GoogleFonts.poppins(fontSize: 16),
+        ),
+      ],
     );
   }
 }
