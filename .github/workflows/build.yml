@@ -1,4 +1,4 @@
-name: Build Flutter Web App
+name: Build and Deploy Flutter Web App
 
 on:
   push:
@@ -9,12 +9,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Install Flutter
-        uses: actions/setup-node@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Cache Flutter SDK
+        uses: actions/cache@v3
         with:
-          node-version: '16.x'
-          cache: 'npm'
+          path: ~/.flutter
+          key: flutter-${{ runner.os }}-{{ hashFiles('flutter/bin/flutter') }}
+          restore-keys: |
+            flutter-${{ runner.os }}-
       - name: Install Flutter
         run: |
           curl -fsSL https://get.flutter.dev/ | sh
@@ -22,10 +25,14 @@ jobs:
         run: flutter config --enable-web
       - name: Get Flutter dependencies
         run: flutter pub get
+      - name: Analyze code
+        run: flutter analyze --strict
+      - name: Run unit tests
+        run: flutter test
       - name: Build Flutter web app
         run: flutter build web --release
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v2
         with:
-          name: flutter-web-build
-          path: build
+          folder: build
+          github_token: ${{ secrets.GITHUB_TOKEN }}
