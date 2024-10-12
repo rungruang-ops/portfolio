@@ -27,7 +27,7 @@ jobs:
           git config --global user.name rungruang-ops
           git status
           git remote add origin https://${{secrets.commit_secret}}@github.com/rungruang-ops/portfolio.git
-          git checkout -b main
+          git checkout -b gh-pages
           git add --all
           git commit -m "update"
-          git push origin main -f
+          git push origin gh-pages -f
