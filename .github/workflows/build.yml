@@ -1,38 +1,33 @@
-name: Build and Deploy Flutter Web App
-
+name: Flutter Web
 on:
   push:
-    branches: [main]
-
+    branches:
+      - main
 jobs:
   build:
+    name: Build Web
+    env:
+      my_secret: ${{secrets.commit_secret}}
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: Cache Flutter SDK
-        uses: actions/cache@v3
+      - uses: actions/checkout@v1
+      - uses: subosito/flutter-action@v1
         with:
-          path: ~/.flutter
-          key: flutter-${{ runner.os }}-{{ hashFiles('flutter/bin/flutter') }}
-          restore-keys: |
-            flutter-${{ runner.os }}-
-      - name: Install Flutter
-        run: |
-          curl -fsSL https://get.flutter.dev/ | sh
-      - name: Set up Flutter
-        run: flutter config --enable-web
-      - name: Get Flutter dependencies
-        run: flutter pub get
-      - name: Analyze code
-        run: flutter analyze --strict
-      - name: Run unit tests
-        run: flutter test
-      - name: Build Flutter web app
-        run: flutter build web --release
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v2
-        with:
-          folder: build
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          channel: 'dev'
+      - run: flutter config --enable-web
+      - run: flutter pub get
+      - run: flutter build web --release
+      - run: |
+          cd build/web
+          git init
+          # type configurations: your user.email and user.name followed lines 
+          # git config --global user.email your_email 
+          # git config --global user.name your_name 
+          git config --global user.email rungruang@kkumail.com
+          git config --global user.name rungruang-ops
+          git status
+          git remote add origin https://${{secrets.commit_secret}}@github.com/rungruang-ops/portfolio.git
+          git checkout -b main
+          git add --all
+          git commit -m "update"
+          git push origin main -f
